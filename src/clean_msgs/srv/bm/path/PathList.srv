@@ -1,0 +1,6 @@
+# bm service name: /path_list
+string map_id
+
+---
+uint32 result       # 返回结果（必填）
+PathInfo[]  paths   # Path列表

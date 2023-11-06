@@ -1,0 +1,7 @@
+# bm service name: /task_update
+
+string task_id                   # 任务ID   [必填]
+string name                      # 任务名称 [选填]
+SubTaskInfo[] subtasks           # 子任务信息 [必填]
+---
+uint32 result                 # 返回结果 [必填]

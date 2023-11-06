@@ -1,0 +1,23 @@
+# Provide navi task start process define
+# bm service name: /task_start
+
+uint32 COMPO_TASK = 1               # 组合任务
+uint32 COLLECT = 2                  # 集水
+uint32 DIRECT_POINT = 3             # 直接导航到点
+uint32 DIRECT_PATH = 4              # 直接清洁路线/清洁区域清洗
+uint32 CONTINUE_CLEAN = 5           # 断点继洗
+uint32 RETURN = 6                   # 一键返回
+
+uint32 cmd                    # 命令类型（必填）
+string task_id
+string mode_id
+string point_id
+string path_id
+string map_id                 #used when DIRECT_POINT and PATH_CLEAN
+uint8 return_type             # 返回点类型，RETURN时使用
+bool is_manual_collect        # 是否手动集水，集水时指定
+uint32 loop_count
+
+---
+uint32 result                 # 返回结果（必填）
+string exec_id

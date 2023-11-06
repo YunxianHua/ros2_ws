@@ -1,0 +1,14 @@
+# bm service name: /point_update
+uint8 TYPE_NAVI = 1     # 导航点
+uint8 TYPE_SUPPLY = 2   # 补给站
+uint8 TYPE_DOCK = 3     # 停靠点
+
+string id
+string map_id
+uint8 type            # 点类型
+string name
+float32 point_x
+float32 point_y   
+float32 point_yaw     # 点方向  [-pi,pi]
+---
+uint32 result       # 返回结果（必填）

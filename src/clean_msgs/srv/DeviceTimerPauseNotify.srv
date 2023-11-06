@@ -1,0 +1,6 @@
+# Provide device timer stop notify to device manager cmd services
+# service name: /device_timer_pause_notify
+
+bool device_timer_pause  # true: 暂停设备计时   false: 继续设备计时
+---
+uint32 result

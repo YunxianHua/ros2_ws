@@ -1,0 +1,20 @@
+# bm service name: /point_create
+uint8 TYPE_NAVI = 1     # 导航点
+uint8 TYPE_SUPPLY = 2   # 补给站
+uint8 TYPE_DOCK = 3     # 停靠点
+
+
+uint8 CREATE_TYPE_MANUAL = 1  # 手动打点
+uint8 CREATE_TYPE_FOLLOW = 2  # 录制打点
+
+string map_id
+uint8 type            # 点类型
+uint8 create_type     # 点创建方式
+string name
+float32 point_x
+float32 point_y   
+float32 point_yaw     # 点方向  [-pi,pi]
+
+---
+uint32 result       # 返回结果（必填）
+string point_id

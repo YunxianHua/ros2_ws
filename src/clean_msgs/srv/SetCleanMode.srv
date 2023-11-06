@@ -1,0 +1,5 @@
+string mode_id
+bool imm_effect
+---
+uint32 result   
+string mode_name

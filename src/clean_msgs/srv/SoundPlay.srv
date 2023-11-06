@@ -1,0 +1,8 @@
+# Provide sound play services
+# service name : /sound_play
+uint32 CLEAN_START = 1        # 开始清洁
+uint32 CLEAN_END = 2          # 获取
+
+uint32 cmd                     # 命令类型（必填）
+---
+uint32 result                  # 返回结果（必填)

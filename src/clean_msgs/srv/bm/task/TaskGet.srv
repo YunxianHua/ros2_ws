@@ -1,0 +1,18 @@
+# bm service name: /task_get
+uint8 TYPE_COMPO_TASK = 1     #组合任务
+uint8 TYPE_BC_TASK = 2        #断点续扫任务
+
+uint8 type
+string task_id                # 任务ID
+---
+uint32 result                 # 返回结果 [必填]
+string id                     # 任务ID
+string name                   # 任务名称
+SubTaskInfo[] subtasks        # 子任务信息 [组合任务专用]
+
+string task_cleaning_mode_id          # 总清洁模式ID   [断点续扫任务专用]
+string task_cleaning_mode_name        # 总清洁模式名称  [断点续扫任务专用]
+uint32 all_loop_count                 # 总循环次数     [断点续扫任务专用]
+uint32 cur_loop_count                 # 断点时循环次数  [断点续扫任务专用]
+string task_start_time                # 启动时间      [断点续扫任务专用]
+string task_suspend_time              # 断点时间      [断点续扫任务专用]

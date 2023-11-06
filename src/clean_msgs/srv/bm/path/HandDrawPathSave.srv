@@ -1,0 +1,5 @@
+# bm service name: /handdraw_path_save
+
+PathInfo[] paths
+---
+uint32 result    

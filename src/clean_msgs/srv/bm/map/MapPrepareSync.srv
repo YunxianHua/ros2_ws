@@ -1,0 +1,18 @@
+# bm service name: /map_sync_prepare
+uint32 MAP_SYNC_TYPE_UNKNOWN = 0
+uint32 MAP_SYNC_TYPE_UPLOAD = 1
+uint32 MAP_SYNC_TYPE_DOWNLOAD = 2
+
+uint32 MAP_TYPE_UNKNOWN = 0
+uint32 MAP_TYPE_PRIVATE = 1
+uint32 MAP_TYPE_PROJECT = 2
+
+uint32 map_sync_type
+string map_id
+uint32 map_type
+---
+uint32 result     # 返回结果（必填）
+string pb_path
+string map_id     # 私有地图时:mapid下载时总是会重置,和Req中不一样
+uint32 map_ver
+bool is_dirty

@@ -1,0 +1,10 @@
+# Provide robot drive mode configuration services
+#service name: /autodrive_mode_switch
+
+uint32  DRIVE_MODE_AUTO = 0    #自动控制模式
+uint32  DRIVE_MODE_MANUAL = 1  #人工控制模式
+
+
+uint32 drive_mode_cmd          #驾驶模式切换指令
+---
+uint32 result                  # 返回结果（必填）

@@ -1,0 +1,5 @@
+# bm service name: /point_del
+string id
+string map_id
+---
+uint32 result       # 返回结果（必填）

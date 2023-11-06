@@ -1,0 +1,16 @@
+# service name: /manual_clean_control
+
+uint32 START = 1
+uint32 CANCEL = 2
+uint32 SWITCH = 3    # 清洁模式切换
+
+uint8 CANCEL_TYPE_POST_NOTHING = 0 #取消任务后不需要后处理
+uint8 CANCEL_TYPE_POST_COLLECT = 1 #取消任务后需要集水后处理
+
+uint32 cmd        # 命令类型（必填）
+string exec_id    # Cancel/Swtich/Collect时需要
+string mode_id    # Start/Switch时需要
+uint8 post_stop_type   # 取消任务后的后处理方式
+---
+uint32 result     # 返回结果（必填）
+string exec_id    # Start成功时返回

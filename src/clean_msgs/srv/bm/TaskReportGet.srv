@@ -1,0 +1,28 @@
+# service name: /task_report_get
+uint32 FINISHED_TYPE_UNKNOWN = 0           # 未知
+uint32 FINISHED_TYPE_NORMAL = 1            # 正常结束
+uint32 FINISHED_TYPE_EXCEPTION = 2         # 异常结束
+uint32 FINISHED_TYPE_MANUAL = 3            # 人为结束
+uint32 FINISHED_TYPE_CONTIUNE_ABANDON = 4  # 续扫放弃(只针对去补给站后放弃续扫，断电导致的续扫放弃没有任务报告)
+
+string task_exe_id
+---
+uint32 result     # 返回结果（必填）
+string task_exe_id
+string task_name
+string cleaning_mode_id
+string cleaning_mode_name
+uint32 actual_loop             #实际循环次数
+uint32 loop                    #循环次数
+uint32 start_utc_time         # 单位 s  e.g. UTC时间总秒数: 1673859045
+uint32 end_utc_time           # 单位 s
+uint32 finished_type
+uint32 supply_times            #补给次数
+uint32 spent_time             #清洁用时(去除暂停时间，补给时间)，单位s (UI负责转换格式: 00:00:00)
+float32 spent_water             #清洁用水(去除暂停时间，补给时间), 单位l，小数点后面1位: 根据机械给出公式计算实际用水量
+float32 spent_battery           #清洁用电(去除暂停时间，补给时间), 单位kwh，小数点后面1位
+uint32 actual_area             #实际清洁面积 单位 m2
+float32 finish_per              #完成率 %，小数点后1位
+uint32 cleaning_efficiency    #清洁效率 单位 m2/h
+
+

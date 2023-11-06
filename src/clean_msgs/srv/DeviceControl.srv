@@ -1,0 +1,23 @@
+# Provide device control cmd services
+# service name: /device_control
+
+uint32 OPEN_WATER = 1            # 打开清水阀
+uint32 STOP_WATER = 2            # 关清水阀
+uint32 OPEN_DEVICE = 3           # 设备开启
+uint32 OPEN_BRUSH_ROLL = 4       # 打开滚刷
+uint32 ADJUST_SUCTION_POWER = 5  # 调整吸风功率
+uint32 STOP_SUCTION = 6          # 关电机
+uint32 STOP_BRUSH_ROLL = 7       # 滚刷停
+uint32 STOP_BRUSH_SIDE = 8       # 边刷停
+uint32 DEPLOY_DEVICE = 9         # 设备下放（刷+扒）
+uint32 LIFT_BRUSH = 10           # 抬刷 
+uint32 LIFT_SQUEEGEE =11         # 抬扒      
+uint32 LIFT_DEVICE = 12          # 设备抬起（刷+扒）           
+uint32 COLLECT_SUCTION = 13      # 延时吸风
+uint32 SELF_CLEAN = 14           # 自清洁
+uint32 SEWAGE_CTL = 15           # 排污
+
+uint32 cmd                      #控制命令
+bool is_delay                   #是否需要延迟
+---
+uint32 result                   # 返回结果（必填）

@@ -1,0 +1,12 @@
+# Provide aigbot version info
+# nav service name: /get_agibot_version
+
+uint32 GET_AGIBOT_VERSION = 1  # 获取版本信息
+
+
+uint32 cmd                    # 命令类型（必填）
+---
+uint32 result                 # 返回结果（必填）
+string product_version        #整机版本
+string soft_version           #软件版本
+string ip_address             #ip地址

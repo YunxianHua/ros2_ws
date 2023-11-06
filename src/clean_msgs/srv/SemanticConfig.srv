@@ -1,0 +1,13 @@
+# Provide semantic data configuration services
+
+uint32 SAVE = 0               # 保存语义数据
+uint32 UPDATE = 1             # 更新语义数据
+uint32 DELETE = 2             # 删除语义数据
+uint32 SELECT = 3             # 获取语义数据
+
+uint32 cmd                     # 命令类型（必填）
+string map_id                  # 地图唯一id标识
+SemanticInfo[] semantic_info   # 语义数据信息
+---
+uint32 result                  # 返回结果（必填）
+SemanticInfo[] semantic_info   # 语义数据信息

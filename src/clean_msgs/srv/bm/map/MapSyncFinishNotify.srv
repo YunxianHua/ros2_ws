@@ -1,0 +1,20 @@
+# bm service name: /map_sync_finish
+uint32 MAP_SYNC_TYPE_UNKNOWN = 0
+uint32 MAP_SYNC_TYPE_UPLOAD = 1
+uint32 MAP_SYNC_TYPE_DOWNLOAD = 2
+
+uint32 MAP_TYPE_UNKNOWN = 0
+uint32 MAP_TYPE_PRIVATE = 1
+uint32 MAP_TYPE_PROJECT = 2
+
+uint32 MAP_SYNC_RESULT_UNKNOWN = 0
+uint32 MAP_SYNC_RESULT_SUCESS = 1
+uint32 MAP_SYNC_RESULT_FAILED = 2
+
+uint32 map_sync_type
+string map_id
+uint32 map_type
+uint32 map_ver                    # 地图版本(云端): 单位 s  e.g. UTC时间总秒数: 1673859045
+uint32 map_sync_result
+---
+uint32 result     # 返回结果（必填）

@@ -1,0 +1,8 @@
+# bm service name: /path_update
+string id
+string map_id
+string path_name                #可选
+string cleaning_mode_id         #可选
+geometry_msgs/Point[] points
+---
+uint32 result       # 返回结果（必填）

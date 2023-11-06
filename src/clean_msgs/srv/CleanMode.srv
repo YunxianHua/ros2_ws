@@ -1,0 +1,14 @@
+# Provide clean mode data configuration services
+# service name : /config_clean_mode
+uint32 INSERT = 0             # 保存
+uint32 UPDATE = 1             # 更新
+uint32 DELETE = 2             # 删除
+uint32 GET = 3                # 获取
+uint32 RESET = 4              # 重置
+
+uint32 cmd                     # 命令类型（必填）
+CleanModeInfo mode_info        # 清洗模式信息
+---
+uint32 result                  # 返回结果（必填）
+string mode_id                 # 清洗模式id
+CleanModeInfo[] mode_info      # 清洗模式信息

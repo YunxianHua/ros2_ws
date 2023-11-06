@@ -1,0 +1,12 @@
+# Provide device level configuration services
+#service name: /config_device_level
+
+uint32 UPDATE = 0             # 更新
+uint32 GET = 1                # 获取
+uint32 RESET = 2              # 重置
+
+uint32 cmd                     # 命令类型（必填）
+DeviceInfo device_info         # 设备等级信息
+---
+uint32 result                  # 返回结果（必填）
+DeviceInfo[] device_info       # 设备等级信息

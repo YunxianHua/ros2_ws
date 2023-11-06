@@ -1,0 +1,18 @@
+# bm service name: /follow_path_build
+uint32 FOLLOW_PATH_BUILD_START = 1  #示教路径创建开始
+uint32 FOLLOW_PATH_BUILD_CANCEL = 2 #示教路径创建取消
+uint32 FOLLOW_PATH_BUILD_SAVE = 3   #示教路径创建保存
+
+uint32 PATH_TYPE_LINE = 1 #线型
+uint32 PATH_TYPE_ZONE = 2 #区域型
+
+uint32 cmd          # 命令类型（必填）
+uint32 path_type    # Path类型（start时填写）
+string map_id       # （必填）
+string exec_id      # 执行ID，取消或保存时提供
+string name         # Path名称,保存时提供
+
+---
+uint32 result     # 返回结果（必填）
+string exec_id    # 执行ID， 开始成功后返回
+string path_id    # 保存成功后返回

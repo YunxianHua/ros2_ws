@@ -1,0 +1,5 @@
+# bm service name: /task_list
+
+---
+uint32 result       # 返回结果（必填）
+string[]  task_ids     # Task ID列表

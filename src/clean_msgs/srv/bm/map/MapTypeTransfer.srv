@@ -1,0 +1,7 @@
+# bm service name: /map_type_transfer
+
+string map_id
+string project_map_name
+uint32 project_map_ver  #项目地图版本(云端): 单位 s  e.g. UTC时间总秒数: 1673859045
+---
+uint32 result     # 返回结果（必填）

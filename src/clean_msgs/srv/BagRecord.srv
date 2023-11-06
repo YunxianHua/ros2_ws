@@ -1,0 +1,6 @@
+#provid bag record trigger service
+#service name: /bag_record
+
+uint8 trigger       # 1: 触发记录bag
+---
+uint32 result       #返回结果(必填)

@@ -1,0 +1,12 @@
+# Provide get collect water time cmd services
+# service name: /get_collect_water_time
+
+uint8 PHASE_TYPE_SHAKE_WATER = 1    #甩水总时间
+uint8 PHASE_TYPE_SUCTION = 2        #吸风总时间
+uint8 PHASE_TYPE_GROUND_SUCTION = 3 #贴地吸风时间
+uint8 PHASE_TYPE_LIFT_SUCTION = 4   #抬起吸风时间
+
+uint8 phase_type                    # 阶段类型
+---
+uint32 result                       # 返回结果
+uint32 time                         # 返回时间

@@ -1,0 +1,7 @@
+# bm service name: /task_create
+
+string name                               #任务名称   [必填]
+SubTaskInfo[] subtasks                    #子任务信息 [必填]
+---
+uint32 result     # 返回结果（必填）
+string task_id    # 保存成功后返回

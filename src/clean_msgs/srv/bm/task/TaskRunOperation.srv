@@ -1,0 +1,22 @@
+# Provide clean task control process define
+# service name: /task_operation
+
+uint32 CMD_PAUSE = 1              # 暂停任务
+uint32 CMD_RESUME = 2             # 暂停后恢复任务
+uint32 CMD_STOP = 3               # 停止任务
+uint32 CMD_SKIP = 4               # 跳过子任务:目前只支持集水任务
+uint32 CMD_INT = 5                # 中断：目前用于中断Pause后的延迟吸风
+uint32 CMD_BREAK = 6              # 中断任务
+
+uint8 STOPTYPE_POST_NOTHING = 0 #取消任务后不需要后处理
+uint8 STOPTYPE_POST_COLLECT = 1 #取消任务后需要集水后处理
+
+uint8 PROPERATOR_MANUAL = 0   # 来自UI的暂停/继续
+uint8 PROPERATOR_SYSTEM = 1   # 来自系统内部的自动暂停/继续
+
+uint32 cmd                    # 命令类型（必填）
+string exec_id                # PROPERATOR_SYSTEM时不需要提供
+uint8 stop_type               # STOP 取消任务后的后处理方式
+uint8 pr_operator             # PAUSE，RESUME时操作方
+---
+uint32 result                 # 返回结果（必填）

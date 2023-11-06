@@ -1,0 +1,10 @@
+# Provide sound system configuration services
+# service name : /config_sound
+uint32 UPDATE = 1             # 更新
+uint32 GET = 2                # 获取
+
+uint32 cmd                     # 命令类型（必填）
+uint32 volume                  #音量[0, 100]
+---
+uint32 result                  # 返回结果（必填）
+uint32 volume                  # 音量 [0, 100]

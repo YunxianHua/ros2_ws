@@ -1,0 +1,9 @@
+# Provide get clean mode info configuration services
+#service name: /get_clean_mode
+
+string mode_id      #清洁模式ID
+---
+uint32 result           # 返回结果（必填）
+string mode_name        #清洁模式名
+bool   use_clean_water_tank     #模式是否用清水箱 true:使用， false :不使用
+bool   use_sewage_tank      #模式是否使用污水箱 true:使用， false:不使用

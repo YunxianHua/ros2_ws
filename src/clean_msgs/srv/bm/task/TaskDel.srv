@@ -1,0 +1,8 @@
+# bm service name: /task_del
+uint8 TYPE_COMPO_TASK = 1
+uint8 TYPE_BC_TASK = 2
+
+uint8 type
+string task_id                   # 任务ID
+---
+uint32 result                 # 返回结果 [必填]

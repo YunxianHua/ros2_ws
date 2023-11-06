@@ -1,0 +1,13 @@
+# slam service request message
+uint8 CMD_MATCH_STRICT = 1
+uint8 CMD_MATCH_SUPPLY = 2
+uint8 CMD_MATCH_MANUAL = 3
+uint8 CMD_NO_MATCH = 4
+
+
+uint8 id
+uint8 command
+geometry_msgs/Pose[] poses
+---
+# slam service response message
+uint32 result

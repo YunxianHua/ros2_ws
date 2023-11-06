@@ -1,0 +1,44 @@
+# Provide interface definition for automated cleaning process
+# action name: /start_nav_task 
+
+# Goal message
+uint32 GOAL_AUTO_CLEAN = 1          # 自动清洗
+uint32 GOAL_CLEAN_COLLECT = 2       # 清扫后集水
+uint32 GOAL_DIRECT_POINT = 3        # 直接导航到点
+
+uint32 PATH_TYPE_LINE = 1
+uint32 PATH_TYPE_ZONE = 2
+
+uint32 cmd
+uint32 path_type
+string path_dir                 # 路径数据存放位置
+string cleaned_path_dir         # 已轻洗过的路径
+bool is_clean_start_stop        # 是否需要在清扫起始点停车
+PointInfo point
+float32 collect_dist
+---
+
+# Result message
+uint32 SUCCEEDED = 1
+uint32 ABORTED = 2
+uint32 CANCELED = 3
+
+uint32 result
+---
+
+# Feedback message
+uint32 RUN_STATUS_RUNNING = 1
+uint32 RUN_STATUS_BLOCKING = 2
+uint32 RUN_STATUS_COLLISION = 3
+uint32 RUN_STATUS_PLAN_FAIL = 4
+uint32 RUN_STATUS_ARRIVE_CLEAN_START = 5
+
+uint32 NEXT_DEST_TYPE_FINISH = 1        # 清扫终点
+uint32 NEXT_DEST_TYPE_START_CLEAN = 2   # 清扫起始位置
+uint32 NEXT_DEST_TYPE_CARPET = 3        # 地毯区
+
+uint32 run_status
+uint32 next_dest
+float32 remain_dist
+uint32 cleaning_ratio
+uint32 expected_area

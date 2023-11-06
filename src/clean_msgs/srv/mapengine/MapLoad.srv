@@ -1,0 +1,17 @@
+# Provide map data acquisition and loading services
+# bm service name: /map_load_cmd   map_engine service name: /load_map
+
+uint32 MAP_LIST = 1         # 获取地图列表
+uint32 MAP_LOAD = 2         # 获取地图数据
+uint32 MAP_SWITCH = 3       # 切换地图
+
+uint8 MAP_TYPE_ALL = 1      # 全部地图
+uint8 MAP_TYPE_PRIVATE = 2  # 私有地图
+uint8 MAP_TYPE_PROJECT = 3  # 项目地图
+
+uint32 cmd        # 命令类型（必填）
+string map_id     # 地图唯一id标识
+uint8 map_type    # 地图获取类型
+---
+uint32 result     # 返回结果（必填）
+MapInfo[] map     # 地图数据信息

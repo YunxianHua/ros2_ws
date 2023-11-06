@@ -1,0 +1,13 @@
+# Provide special zone cmd handle process define
+# bm service name: /ui_special_zone_cmd
+
+uint8 INSERT = 1
+uint8 DELETE = 2
+uint8 UPDATE = 3 
+uint8 GET = 4
+
+uint8 cmd                    # 命令类型（必填）
+SpecialZoneInfo zone_info
+---
+uint32 result                 # 返回结果（必填）
+SpecialZoneInfo[] zone_info

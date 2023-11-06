@@ -1,0 +1,13 @@
+# Provide clean task control process define
+# nav service name: /nav_control_cmd
+
+uint32 CANCEL = 1             # 取消任务
+uint32 PAUSE = 2              # 暂停任务
+uint32 RESUME = 3             # 暂停后恢复任务
+uint32 COVER = 4              # 开始覆盖清扫
+uint32 BREAK = 5              # 中断任务
+
+
+uint32 cmd                    # 命令类型（必填）
+---
+uint32 result                 # 返回结果（必填）

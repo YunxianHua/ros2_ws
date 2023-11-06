@@ -1,0 +1,11 @@
+# bm service name: /map_prepare_type_transfer
+uint32 PREPARE_MODE_UNKNOWN = 0
+uint32 PREPARE_MODE_IN = 1
+uint32 PREPARE_MODE_OUT = 2
+
+uint32 prepare_mode
+string map_id
+---
+uint32 result     # 返回结果（必填）
+uint32 map_ver
+bool is_dirty

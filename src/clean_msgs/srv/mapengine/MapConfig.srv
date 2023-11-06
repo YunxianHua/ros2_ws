@@ -1,0 +1,18 @@
+# Provide mapping and map configuration services
+# bm service name:  /config_map
+
+uint32 MAP_START = 1   # 开始建图
+uint32 MAP_SAVE = 2    # 保存地图
+uint32 MAP_UPDATE = 3  # 更新地图
+uint32 MAP_CANCEL = 4  # 取消建图
+uint32 MAP_DELETE = 5  # 删除地图
+uint32 MAP_EXTEND = 6  # 开始扩展建图
+uint32 MAP_LOOP = 7    # 地图回环
+
+uint32 cmd        # 命令类型（必填）
+string exec_id    # 当前任务id，用于建图任务校验
+MapInfo map_info  # 更新地图数据
+MapDataUpdateInfo[] data_info # 更新地图像素数据
+---
+uint32 result     # 返回结果（必填）
+string map_id     # 生成地图id并返回

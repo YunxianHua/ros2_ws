@@ -1,0 +1,18 @@
+# service name: /remote_control_cmd
+
+uint32 REMOTE_CONTROL_TYPE_START        = 1   #开始远程遥控连接指令
+uint32 REMOTE_CONTROL_TYPE_START_COMP   = 2   #远程遥控建立指令
+uint32 REMOTE_CONTROL_TYPE_CMD          = 3   #远程遥控具体控制指令
+
+uint32 cmd_type        # 命令类型（必填）
+uint64 time_stamp1     # 消息时间戳
+uint64 time_stamp2     # 指令为 远程遥控建立指令时使用，用于进行时钟校准
+string session_id      # session_id 唯一标识连接设备
+uint32 direction       # 前进/后退方向 0:无效值; 1:前进; 2:后退
+uint32 turning         # 左右转向 0:无效值; 1:前进; 2:后退
+float32 linear         # 线速度 [0.2, 0.8]
+float32 angle          # 角速度 [0, 0.78]，暂定使用弧度，最大弧度不应该超过π/4
+---
+uint32 result        # 返回结果（必填）
+uint64 time_stamp    #应答时间戳
+string session_id    # session id, 使用发送来的id，直接返回

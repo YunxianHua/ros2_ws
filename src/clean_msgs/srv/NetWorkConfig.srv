@@ -1,0 +1,29 @@
+# Provide network system configuration services
+# service name : /config_network
+uint32 NETWOTK_TYPE_CELLULAR    = 0             # 蜂窝网络
+uint32 NETWOTK_TYPE_WIRELESS    = 1             # 无线网络
+uint32 NETWOTK_TYPE_HOTSPOT     = 2             # 热点
+uint32 NETWORK_TYPE_ALL         =3              #获取所有网络
+
+uint32 NETWORK_CMD_CLOSE         = 0             # 关闭网络
+uint32 NETWORK_CMD_OPEN          = 1             #打开网络
+uint32 NETWORK_CMD_GET           = 2             #获取当前使用的网络状态
+uint32 NETWORK_CMD_WIRELESS_LIST = 4             #获取所有可连接的无线网络列表
+uint32 NETWORK_CMD_CONNECT       = 5             #连接无线网络
+
+uint32 cmd                     # 命令类型（必填）
+uint32 type                    #网络类型
+string wireless_name           #连接无线网络使用名
+string wireless_passwd         #连接无线网络使用密码
+---
+uint32 result                       # 返回结果（必填）
+bool cellular_net_enable            #蜂窝网络是否打开(open/close/Get时使用)
+uint32 cellular_provider            #网络运营商1:移动; 2:联通 3:电信
+uint32 cellular_standard            #网络制式   1:4G; 2: 5G
+uint32 cellular_signal              #信号强度 [0, 100]
+bool wireless_net_enable            #无线网络是否打开(open/close/Get时使用)
+WirelessNetwork[] wireless_infos    #获取无线网络信息时使用
+bool hotspot_enable                 #热点网络是否打开(open/close/Get时使用)
+string hotspot_name                 #热点名
+string hostspot_passwd              #热点密码
+

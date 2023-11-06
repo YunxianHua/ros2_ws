@@ -1,0 +1,14 @@
+# bm service name: /path_opr
+uint8 CMD_SEPARATE = 1   #折线分割
+uint8 CMD_POLYGON = 2    #绘制区域
+uint8 CMD_MERGE = 3      #区域合并
+
+uint8 cmd                            # 命令类型（必填）
+string map_id                        # 地图id
+string[] path_dir                    # 操作区域路径（分割、合并使用）
+geometry_msgs/Polygon[] polylines    # 折线数据（分割使用）
+geometry_msgs/Polygon[] zones        # 新增区域数据（绘制使用）
+---
+uint32 result                        # 返回结果（必填）
+string[] delete_path_ids             # 删除区域id
+geometry_msgs/Polygon[] new_zones    # 新增区域点位信息

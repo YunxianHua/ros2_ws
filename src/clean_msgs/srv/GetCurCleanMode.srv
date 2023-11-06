@@ -1,0 +1,10 @@
+# Provide get current clean mode info configuration services
+#service name: /get_current_clean_mode
+
+uint32 GET = 1                # 获取
+
+uint32 cmd      #命令类型
+---
+uint32 result           # 返回结果（必填）
+string mode_id          #清洁模式ID
+string mode_name        #清洁模式名
