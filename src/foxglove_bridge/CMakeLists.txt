@@ -111,6 +111,8 @@ if(DEFINED ENV{AMENT_PREFIX_PATH})
           ros2_foxglove_bridge/src/parameter_interface.cpp
           ros2_foxglove_bridge/src/generic_client.cpp
           ros2_foxglove_bridge/src/generic_subscription.cpp
+          ros2_foxglove_bridge/src/generic_publisher.cpp
+          ros2_foxglove_bridge/src/typesupport_helpers.cpp
   )
   target_include_directories(foxglove_bridge_component
           PUBLIC
@@ -132,9 +134,33 @@ else()
   message(FATAL_ERROR "Could not find ament_cmake")
 endif()
 
+#### TESTS #####################################################################
+if(BUILD_TESTING)
+  message(STATUS "Building tests with ament_cmake")
+
+  find_package(ament_cmake_gtest REQUIRED)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+
+  ament_add_gtest(version_test foxglove_bridge_base/tests/version_test.cpp)
+  target_link_libraries(version_test foxglove_bridge_base)
+  enable_strict_compiler_warnings(version_test)
+
+  ament_add_gtest(serialization_test foxglove_bridge_base/tests/serialization_test.cpp)
+  target_link_libraries(serialization_test foxglove_bridge_base)
+  enable_strict_compiler_warnings(serialization_test)
+
+  ament_add_gtest(base64_test foxglove_bridge_base/tests/base64_test.cpp)
+  target_link_libraries(base64_test foxglove_bridge_base)
+  enable_strict_compiler_warnings(base64_test)
+
+  ament_add_gtest(smoke_test ros2_foxglove_bridge/tests/smoke_test.cpp)
+  ament_target_dependencies(smoke_test rclcpp rclcpp_components std_msgs std_srvs)
+  target_link_libraries(smoke_test foxglove_bridge_base)
+  enable_strict_compiler_warnings(smoke_test)
+endif()
 
 #### INSTALL ###################################################################
-
 if(ROS_BUILD_TYPE STREQUAL "catkin")
   install(TARGETS foxglove_bridge
           RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

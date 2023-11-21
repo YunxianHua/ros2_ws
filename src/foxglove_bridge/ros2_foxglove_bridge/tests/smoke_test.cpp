@@ -283,7 +283,7 @@ TEST(SmokeTest, testPublishing) {
   client->unadvertise({advertisement.channelId});
 
   // Ensure that we have received the correct message via our ROS subscriber
-  const auto ret = executor.spin_until_future_complete(msgFuture, ONE_SECOND);
+  const auto ret = executor.spin_until_future_complete(msgFuture.share(), ONE_SECOND);
   ASSERT_EQ(rclcpp::FutureReturnCode::SUCCESS, ret);
   EXPECT_EQ("hello world", msgFuture.get());
 }
@@ -320,7 +320,7 @@ TEST_F(ExistingPublisherTest, testPublishingWithExistingPublisher) {
   client->unadvertise({advertisement.channelId});
 
   // Ensure that we have received the correct message via our ROS subscriber
-  const auto ret = executor.spin_until_future_complete(msgFuture, ONE_SECOND);
+  const auto ret = executor.spin_until_future_complete(msgFuture.share(), ONE_SECOND);
   ASSERT_EQ(rclcpp::FutureReturnCode::SUCCESS, ret);
   EXPECT_EQ("hello world", msgFuture.get());
 }

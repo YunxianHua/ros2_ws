@@ -536,8 +536,8 @@ void FoxgloveBridge::subscribe(foxglove::ChannelId channelId, ConnectionHandle c
     auto subscriber = rclcpp::create_generic_subscription(
       this->get_node_topics_interface(),
       topic, datatype, qos,
-      std::bind(&FoxgloveBridge::rosMessageHandler, this, channelId, clientHandle, _1),
-      subscriptionOptions);
+      std::bind(&FoxgloveBridge::rosMessageHandler, this, channelId, clientHandle, _1));//,
+//      subscriptionOptions);
     subscriptionsByClient.emplace(clientHandle, std::move(subscriber));
   } catch (const std::exception& ex) {
     throw foxglove::ChannelError(
@@ -626,7 +626,7 @@ void FoxgloveBridge::clientAdvertise(const foxglove::ClientAdvertisement& advert
     rclcpp::PublisherOptions publisherOptions{};
     publisherOptions.callback_group = _clientPublishCallbackGroup;
     auto publisher = rclcpp::create_generic_publisher(
-            this->get_node_topics_interface(), topicName, topicType, qos, publisherOptions);
+            this->get_node_topics_interface(), topicName, topicType, qos);//, publisherOptions);
 
     RCLCPP_INFO(this->get_logger(), "Client %s is advertising \"%s\" (%s) on channel %d",
                 _server->remoteEndpointString(hdl).c_str(), topicName.c_str(), topicType.c_str(),
@@ -710,7 +710,7 @@ void FoxgloveBridge::clientMessage(const foxglove::ClientMessage& message, Conne
   rclSerializedMsg.buffer_length = message.getLength();
 
   // Publish the message
-  publisher->publish(serializedMessage);
+  publisher->publish(std::make_shared<rcl_serialized_message_t>(serializedMessage.get_rcl_serialized_message()));
 }
 
 void FoxgloveBridge::setParameters(const std::vector<foxglove::Parameter>& parameters,

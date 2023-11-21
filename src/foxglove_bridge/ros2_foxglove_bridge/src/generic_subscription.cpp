@@ -1,5 +1,4 @@
 // Copyright 2018, Bosch Software Innovations GmbH.
-// Copyright 2021, Apex.AI Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,115 +17,86 @@
 #include <memory>
 #include <string>
 
-#include "rcl/subscription.h"
+#include "rclcpp/any_subscription_callback.hpp"
+#include "rclcpp/subscription.hpp"
 
-#include "rclcpp/exceptions.hpp"
+
+namespace
+{
+    rcl_subscription_options_t get_subscription_options(const rclcpp::QoS & qos)
+    {
+        auto options = rcl_subscription_get_default_options();
+        options.qos = qos.get_rmw_qos_profile();
+        return options;
+    }
+}  // unnamed namespace
 
 namespace rclcpp
 {
 
-    std::shared_ptr<void>
-    GenericSubscription::create_message()
+    GenericSubscription::GenericSubscription(
+            rclcpp::node_interfaces::NodeBaseInterface * node_base,
+            const rosidl_message_type_support_t & ts,
+            const std::string & topic_name,
+            const rclcpp::QoS & qos,
+            std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback)
+            : SubscriptionBase(
+            node_base,
+            ts,
+            topic_name,
+            get_subscription_options(qos),
+            true),
+              default_allocator_(rcutils_get_default_allocator()),
+              callback_(callback),
+              qos_(qos)
+    {}
+
+    std::shared_ptr<void> GenericSubscription::create_message()
     {
         return create_serialized_message();
     }
 
-    std::shared_ptr<rclcpp::SerializedMessage>
-    GenericSubscription::create_serialized_message()
+    std::shared_ptr<rclcpp::SerializedMessage> GenericSubscription::create_serialized_message()
     {
-        return std::make_shared<rclcpp::SerializedMessage>(0);
+        return borrow_serialized_message(0);
     }
 
-    void
-    GenericSubscription::handle_message(
-            std::shared_ptr<void> &,
-            const rclcpp::MessageInfo &)
+    void GenericSubscription::handle_message(
+            std::shared_ptr<void> & message, const rclcpp::MessageInfo & message_info)
     {
-        throw rclcpp::exceptions::UnimplementedError(
-                "handle_message is not implemented for GenericSubscription");
+        (void) message_info;
+        auto typed_message = std::static_pointer_cast<rclcpp::SerializedMessage>(message);
+        callback_(typed_message);
     }
 
-    void
-    GenericSubscription::handle_serialized_message(
-            const std::shared_ptr<rclcpp::SerializedMessage> & message,
-            const rclcpp::MessageInfo &)
-    {
-        callback_(message);
-    }
-
-    void
-    GenericSubscription::handle_loaned_message(
+    void GenericSubscription::handle_loaned_message(
             void * message, const rclcpp::MessageInfo & message_info)
     {
         (void) message;
         (void) message_info;
-        throw rclcpp::exceptions::UnimplementedError(
-                "handle_loaned_message is not implemented for GenericSubscription");
     }
 
-    void
-    GenericSubscription::return_message(std::shared_ptr<void> & message)
+    void GenericSubscription::return_message(std::shared_ptr<void> & message)
     {
         auto typed_message = std::static_pointer_cast<rclcpp::SerializedMessage>(message);
         return_serialized_message(typed_message);
     }
 
-    void
-    GenericSubscription::return_serialized_message(
+    void GenericSubscription::return_serialized_message(
             std::shared_ptr<rclcpp::SerializedMessage> & message)
     {
         message.reset();
     }
 
-
-// DYNAMIC TYPE ====================================================================================
-// TODO(methylDragon): Reorder later
-    rclcpp::dynamic_typesupport::DynamicMessageType::SharedPtr
-    GenericSubscription::get_shared_dynamic_message_type()
+    const rclcpp::QoS & GenericSubscription::qos_profile() const
     {
-        throw rclcpp::exceptions::UnimplementedError(
-                "get_shared_dynamic_message_type is not implemented for GenericSubscription");
+        return qos_;
     }
 
-    rclcpp::dynamic_typesupport::DynamicMessage::SharedPtr
-    GenericSubscription::get_shared_dynamic_message()
+    std::shared_ptr<rclcpp::SerializedMessage>
+    GenericSubscription::borrow_serialized_message(size_t capacity)
     {
-        throw rclcpp::exceptions::UnimplementedError(
-                "get_shared_dynamic_message is not implemented for GenericSubscription");
-    }
-
-    rclcpp::dynamic_typesupport::DynamicSerializationSupport::SharedPtr
-    GenericSubscription::get_shared_dynamic_serialization_support()
-    {
-        throw rclcpp::exceptions::UnimplementedError(
-                "get_shared_dynamic_serialization_support is not implemented for GenericSubscription");
-    }
-
-    rclcpp::dynamic_typesupport::DynamicMessage::SharedPtr
-    GenericSubscription::create_dynamic_message()
-    {
-        throw rclcpp::exceptions::UnimplementedError(
-                "create_dynamic_message is not implemented for GenericSubscription");
-    }
-
-    void
-    GenericSubscription::return_dynamic_message(
-            rclcpp::dynamic_typesupport::DynamicMessage::SharedPtr & message)
-    {
-        (void) message;
-        throw rclcpp::exceptions::UnimplementedError(
-                "return_dynamic_message is not implemented for GenericSubscription");
-    }
-
-    void
-    GenericSubscription::handle_dynamic_message(
-            const rclcpp::dynamic_typesupport::DynamicMessage::SharedPtr & message,
-            const rclcpp::MessageInfo & message_info)
-    {
-        (void) message;
-        (void) message_info;
-        throw rclcpp::exceptions::UnimplementedError(
-                "handle_dynamic_message is not implemented for GenericSubscription");
+        return std::make_shared<rclcpp::SerializedMessage>(capacity);
     }
 
 }  // namespace rclcpp
