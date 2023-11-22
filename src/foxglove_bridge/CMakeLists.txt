@@ -31,7 +31,7 @@ find_package(websocketpp REQUIRED)
 find_package(ZLIB REQUIRED)
 
 if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE RelWithDebInfo)
+  set(CMAKE_BUILD_TYPE "Debug")
 endif()
 
 # Determine wheter to use standalone or boost asio

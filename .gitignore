@@ -36,3 +36,5 @@ install
 log
 
 cmake-build-debug
+CMakeFiles
+CMakeCache.txt
