@@ -16,12 +16,10 @@
 #include "foxglove_bridge/generic_publisher.hpp"
 #include "foxglove_bridge/typesupport_helpers.hpp"
 
-namespace foxglove_bridge
-{
+namespace foxglove_bridge {
     std::shared_ptr<GenericPublisher> create_generic_publisher(
             rclcpp::node_interfaces::NodeTopicsInterface::SharedPtr topics_interface,
-            const std::string & topic, const std::string & type, const rclcpp::QoS & qos)
-    {
+            const std::string &topic, const std::string &type, const rclcpp::QoS &qos) {
         auto library_generic_publisher = foxglove_bridge::get_typesupport_library(
                 type, "rosidl_typesupport_cpp");
         auto type_support = foxglove_bridge::get_typesupport_handle(

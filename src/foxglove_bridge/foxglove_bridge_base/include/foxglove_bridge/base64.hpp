@@ -7,8 +7,8 @@
 
 namespace foxglove {
 
-std::string base64Encode(const std::string_view& input);
+    std::string base64Encode(const std::string_view &input);
 
-std::vector<unsigned char> base64Decode(const std::string& input);
+    std::vector<unsigned char> base64Decode(const std::string &input);
 
 }  // namespace foxglove

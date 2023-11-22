@@ -8,70 +8,81 @@
 
 namespace foxglove {
 
-enum class ParameterSubscriptionOperation {
-  SUBSCRIBE,
-  UNSUBSCRIBE,
-};
+    enum class ParameterSubscriptionOperation {
+        SUBSCRIBE,
+        UNSUBSCRIBE,
+    };
 
-enum class ParameterType {
-  PARAMETER_NOT_SET,
-  PARAMETER_BOOL,
-  PARAMETER_INTEGER,
-  PARAMETER_DOUBLE,
-  PARAMETER_STRING,
-  PARAMETER_ARRAY,
-  PARAMETER_STRUCT,      // ROS 1 only
-  PARAMETER_BYTE_ARRAY,  // ROS 2 only
-};
+    enum class ParameterType {
+        PARAMETER_NOT_SET,
+        PARAMETER_BOOL,
+        PARAMETER_INTEGER,
+        PARAMETER_DOUBLE,
+        PARAMETER_STRING,
+        PARAMETER_ARRAY,
+        PARAMETER_STRUCT,      // ROS 1 only
+        PARAMETER_BYTE_ARRAY,  // ROS 2 only
+    };
 
-class ParameterValue {
-public:
-  ParameterValue();
-  ParameterValue(bool value);
-  ParameterValue(int value);
-  ParameterValue(int64_t value);
-  ParameterValue(double value);
-  ParameterValue(const std::string& value);
-  ParameterValue(const char* value);
-  ParameterValue(const std::vector<unsigned char>& value);
-  ParameterValue(const std::vector<ParameterValue>& value);
-  ParameterValue(const std::unordered_map<std::string, ParameterValue>& value);
+    class ParameterValue {
+    public:
+        ParameterValue();
 
-  inline ParameterType getType() const {
-    return _type;
-  }
+        ParameterValue(bool value);
 
-  template <typename T>
-  inline const T& getValue() const {
-    return std::any_cast<const T&>(_value);
-  }
+        ParameterValue(int value);
 
-private:
-  ParameterType _type;
-  std::any _value;
-};
+        ParameterValue(int64_t value);
 
-class Parameter {
-public:
-  Parameter();
-  Parameter(const std::string& name);
-  Parameter(const std::string& name, const ParameterValue& value);
+        ParameterValue(double value);
 
-  inline const std::string& getName() const {
-    return _name;
-  }
+        ParameterValue(const std::string &value);
 
-  inline ParameterType getType() const {
-    return _value.getType();
-  }
+        ParameterValue(const char *value);
 
-  inline const ParameterValue& getValue() const {
-    return _value;
-  }
+        ParameterValue(const std::vector<unsigned char> &value);
 
-private:
-  std::string _name;
-  ParameterValue _value;
-};
+        ParameterValue(const std::vector<ParameterValue> &value);
+
+        ParameterValue(const std::unordered_map<std::string, ParameterValue> &value);
+
+        inline ParameterType getType() const {
+            return _type;
+        }
+
+        template<typename T>
+        inline const T &getValue() const {
+            return std::any_cast<const T &>(_value);
+        }
+
+    private:
+        ParameterType _type;
+        std::any _value;
+    };
+
+    class Parameter {
+    public:
+        Parameter();
+
+        Parameter(const std::string &name);
+
+        Parameter(const std::string &name, const ParameterValue &value);
+
+        inline const std::string &getName() const {
+            return _name;
+        }
+
+        inline ParameterType getType() const {
+            return _value.getType();
+        }
+
+        inline const ParameterValue &getValue() const {
+            return _value;
+        }
+
+    private:
+        std::string _name;
+        ParameterValue _value;
+    };
 
 }  // namespace foxglove

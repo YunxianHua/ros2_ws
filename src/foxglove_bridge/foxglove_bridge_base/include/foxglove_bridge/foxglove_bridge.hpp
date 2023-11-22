@@ -2,10 +2,10 @@
 
 namespace foxglove {
 
-const char* WebSocketUserAgent();
+    const char *WebSocketUserAgent();
 
-extern const char FOXGLOVE_BRIDGE_VERSION[];
+    extern const char FOXGLOVE_BRIDGE_VERSION[];
 
-extern const char FOXGLOVE_BRIDGE_GIT_HASH[];
+    extern const char FOXGLOVE_BRIDGE_GIT_HASH[];
 
 }  // namespace foxglove

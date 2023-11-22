@@ -24,8 +24,7 @@
 #include "rclcpp/serialization.hpp"
 #include "rclcpp/subscription.hpp"
 
-namespace foxglove_bridge
-{
+namespace foxglove_bridge {
 
 /**
  * This class is an implementation of an rclcpp::Subscription for serialized messages whose topic
@@ -33,8 +32,7 @@ namespace foxglove_bridge
  *
  * It does not support intra-process handling
  */
-    class GenericSubscription : public rclcpp::SubscriptionBase
-    {
+    class GenericSubscription : public rclcpp::SubscriptionBase {
     public:
         RCLCPP_SMART_PTR_DEFINITIONS(GenericSubscription)
 
@@ -48,10 +46,10 @@ namespace foxglove_bridge
          * \param callback Callback for new messages of serialized form
          */
         GenericSubscription(
-                rclcpp::node_interfaces::NodeBaseInterface * node_base,
-                const rosidl_message_type_support_t & ts,
-                const std::string & topic_name,
-                const rclcpp::QoS & qos,
+                rclcpp::node_interfaces::NodeBaseInterface *node_base,
+                const rosidl_message_type_support_t &ts,
+                const std::string &topic_name,
+                const rclcpp::QoS &qos,
                 std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback);
 
         // Same as create_serialized_message() as the subscription is to serialized_messages only
@@ -60,23 +58,24 @@ namespace foxglove_bridge
         std::shared_ptr<rclcpp::SerializedMessage> create_serialized_message() override;
 
         void handle_message(
-                std::shared_ptr<void> & message, const rclcpp::MessageInfo & message_info) override;
+                std::shared_ptr<void> &message, const rclcpp::MessageInfo &message_info) override;
 
         void handle_loaned_message(
-                void * loaned_message, const rclcpp::MessageInfo & message_info) override;
+                void *loaned_message, const rclcpp::MessageInfo &message_info) override;
 
         // Same as return_serialized_message() as the subscription is to serialized_messages only
-        void return_message(std::shared_ptr<void> & message) override;
+        void return_message(std::shared_ptr<void> &message) override;
 
-        void return_serialized_message(std::shared_ptr<rclcpp::SerializedMessage> & message) override;
+        void return_serialized_message(std::shared_ptr<rclcpp::SerializedMessage> &message) override;
 
         // Provide a const reference to the QoS Profile used to create this subscription.
-        const rclcpp::QoS & qos_profile() const;
+        const rclcpp::QoS &qos_profile() const;
 
     private:
         RCLCPP_DISABLE_COPY(GenericSubscription)
 
         std::shared_ptr<rclcpp::SerializedMessage> borrow_serialized_message(size_t capacity);
+
         rcutils_allocator_t default_allocator_;
         std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback_;
         const rclcpp::QoS qos_;

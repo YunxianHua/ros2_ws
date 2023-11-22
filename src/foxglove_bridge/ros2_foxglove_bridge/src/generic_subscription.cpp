@@ -22,23 +22,20 @@
 #include "rclcpp/subscription.hpp"
 
 
-namespace
-{
-    rcl_subscription_options_t get_subscription_options(const rclcpp::QoS & qos)
-    {
+namespace {
+    rcl_subscription_options_t get_subscription_options(const rclcpp::QoS &qos) {
         auto options = rcl_subscription_get_default_options();
         options.qos = qos.get_rmw_qos_profile();
         return options;
     }
 }  // unnamed namespace
 
-namespace foxglove_bridge
-{
+namespace foxglove_bridge {
     GenericSubscription::GenericSubscription(
-            rclcpp::node_interfaces::NodeBaseInterface * node_base,
-            const rosidl_message_type_support_t & ts,
-            const std::string & topic_name,
-            const rclcpp::QoS & qos,
+            rclcpp::node_interfaces::NodeBaseInterface *node_base,
+            const rosidl_message_type_support_t &ts,
+            const std::string &topic_name,
+            const rclcpp::QoS &qos,
             std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback)
             : SubscriptionBase(
             node_base,
@@ -48,54 +45,45 @@ namespace foxglove_bridge
             true),
               default_allocator_(rcutils_get_default_allocator()),
               callback_(std::move(callback)),
-              qos_(qos)
-    {}
+              qos_(qos) {}
 
-    std::shared_ptr<void> GenericSubscription::create_message()
-    {
+    std::shared_ptr<void> GenericSubscription::create_message() {
         return create_serialized_message();
     }
 
-    std::shared_ptr<rclcpp::SerializedMessage> GenericSubscription::create_serialized_message()
-    {
+    std::shared_ptr<rclcpp::SerializedMessage> GenericSubscription::create_serialized_message() {
         return borrow_serialized_message(0);
     }
 
     void GenericSubscription::handle_message(
-            std::shared_ptr<void> & message, const rclcpp::MessageInfo & message_info)
-    {
+            std::shared_ptr<void> &message, const rclcpp::MessageInfo &message_info) {
         (void) message_info;
         auto typed_message = std::static_pointer_cast<rclcpp::SerializedMessage>(message);
         callback_(typed_message);
     }
 
     void GenericSubscription::handle_loaned_message(
-            void * message, const rclcpp::MessageInfo & message_info)
-    {
+            void *message, const rclcpp::MessageInfo &message_info) {
         (void) message;
         (void) message_info;
     }
 
-    void GenericSubscription::return_message(std::shared_ptr<void> & message)
-    {
+    void GenericSubscription::return_message(std::shared_ptr<void> &message) {
         auto typed_message = std::static_pointer_cast<rclcpp::SerializedMessage>(message);
         return_serialized_message(typed_message);
     }
 
     void GenericSubscription::return_serialized_message(
-            std::shared_ptr<rclcpp::SerializedMessage> & message)
-    {
+            std::shared_ptr<rclcpp::SerializedMessage> &message) {
         message.reset();
     }
 
-    const rclcpp::QoS & GenericSubscription::qos_profile() const
-    {
+    const rclcpp::QoS &GenericSubscription::qos_profile() const {
         return qos_;
     }
 
     std::shared_ptr<rclcpp::SerializedMessage>
-    GenericSubscription::borrow_serialized_message(size_t capacity)
-    {
+    GenericSubscription::borrow_serialized_message(size_t capacity) {
         return std::make_shared<rclcpp::SerializedMessage>(capacity);
     }
 

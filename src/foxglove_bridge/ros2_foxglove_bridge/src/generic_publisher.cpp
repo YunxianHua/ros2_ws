@@ -17,28 +17,23 @@
 #include <memory>
 #include <string>
 
-namespace
-{
-    rcl_publisher_options_t get_publisher_options(const rclcpp::QoS & qos)
-    {
+namespace {
+    rcl_publisher_options_t get_publisher_options(const rclcpp::QoS &qos) {
         auto options = rcl_publisher_get_default_options();
         options.qos = qos.get_rmw_qos_profile();
         return options;
     }
 }  // unnamed namespace
 
-namespace foxglove_bridge
-{
+namespace foxglove_bridge {
     GenericPublisher::GenericPublisher(
-            rclcpp::node_interfaces::NodeBaseInterface * node_base,
-            const rosidl_message_type_support_t & type_support,
-            const std::string & topic_name,
-            const rclcpp::QoS & qos)
-            : rclcpp::PublisherBase(node_base, topic_name, type_support, get_publisher_options(qos))
-    {}
+            rclcpp::node_interfaces::NodeBaseInterface *node_base,
+            const rosidl_message_type_support_t &type_support,
+            const std::string &topic_name,
+            const rclcpp::QoS &qos)
+            : rclcpp::PublisherBase(node_base, topic_name, type_support, get_publisher_options(qos)) {}
 
-    void GenericPublisher::publish(const std::shared_ptr<rcl_serialized_message_t>& message)
-    {
+    void GenericPublisher::publish(const std::shared_ptr<rcl_serialized_message_t> &message) {
         auto return_code = rcl_publish_serialized_message(
                 get_publisher_handle().get(), message.get(), nullptr);
 

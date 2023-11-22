@@ -4,8 +4,8 @@
 
 namespace foxglove {
 
-const char* WebSocketUserAgent() {
-  return websocketpp::user_agent;
-}
+    const char *WebSocketUserAgent() {
+        return websocketpp::user_agent;
+    }
 
 }  // namespace foxglove

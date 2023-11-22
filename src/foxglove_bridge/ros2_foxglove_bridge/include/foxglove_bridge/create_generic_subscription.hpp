@@ -4,6 +4,7 @@
 
 #ifndef ROS2_WS_CREATE_GENERIC_SUBSCRIPTION_HPP
 #define ROS2_WS_CREATE_GENERIC_SUBSCRIPTION_HPP
+
 #include <functional>
 #include <memory>
 #include <string>
@@ -18,15 +19,13 @@
 #include "foxglove_bridge/generic_subscription.hpp"
 #include "foxglove_bridge/typesupport_helpers.hpp"
 
-namespace foxglove_bridge
-{
+namespace foxglove_bridge {
     std::shared_ptr<GenericSubscription> create_generic_subscription(
             rclcpp::node_interfaces::NodeTopicsInterface::SharedPtr topics_interface,
-            const std::string & topic,
-            const std::string & type,
-            const rclcpp::QoS & qos,
-            std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback)
-    {
+            const std::string &topic,
+            const std::string &type,
+            const rclcpp::QoS &qos,
+            std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback) {
         auto library_generic_subscriptor_ = foxglove_bridge::get_typesupport_library(
                 type, "rosidl_typesupport_cpp");
         auto type_support = foxglove_bridge::get_typesupport_handle(
@@ -42,8 +41,8 @@ namespace foxglove_bridge
                     callback);
 
             topics_interface->add_subscription(subscription, nullptr);
-        } catch (const std::runtime_error & ex) {
-            std::runtime_error( "Error subscribing to topic '" + topic + "'. Error: " + ex.what());
+        } catch (const std::runtime_error &ex) {
+            std::runtime_error("Error subscribing to topic '" + topic + "'. Error: " + ex.what());
         }
 
         return subscription;
