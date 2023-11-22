@@ -10,7 +10,7 @@
 
 #include "rclcpp/rclcpp.hpp"
 
-namespace rclcpp
+namespace foxglove_bridge
 {
     class GenericPublisher : public rclcpp::PublisherBase
     {
@@ -30,6 +30,6 @@ namespace rclcpp
         void publish(const std::shared_ptr<rcl_serialized_message_t>& message) ;
     };
 
-}
+}  // namespace foxglove_bridge
 
 #endif //ROS2_WS_GENERIC_PUBLISHER_HPP

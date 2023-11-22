@@ -18,9 +18,8 @@
 #include "foxglove_bridge/generic_subscription.hpp"
 #include "foxglove_bridge/typesupport_helpers.hpp"
 
-namespace rclcpp
+namespace foxglove_bridge
 {
-
     std::shared_ptr<GenericSubscription> create_generic_subscription(
             rclcpp::node_interfaces::NodeTopicsInterface::SharedPtr topics_interface,
             const std::string & topic,
@@ -28,9 +27,9 @@ namespace rclcpp
             const rclcpp::QoS & qos,
             std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback)
     {
-        auto library_generic_subscriptor_ = rclcpp::get_typesupport_library(
+        auto library_generic_subscriptor_ = foxglove_bridge::get_typesupport_library(
                 type, "rosidl_typesupport_cpp");
-        auto type_support = rclcpp::get_typesupport_handle(
+        auto type_support = foxglove_bridge::get_typesupport_handle(
                 type, "rosidl_typesupport_cpp", library_generic_subscriptor_);
         auto subscription = std::shared_ptr<GenericSubscription>();
 
@@ -49,6 +48,6 @@ namespace rclcpp
 
         return subscription;
     }
-}  // namespace rclcpp
+}  // namespace foxglove_bridge
 
 #endif //ROS2_WS_CREATE_GENERIC_SUBSCRIPTION_HPP

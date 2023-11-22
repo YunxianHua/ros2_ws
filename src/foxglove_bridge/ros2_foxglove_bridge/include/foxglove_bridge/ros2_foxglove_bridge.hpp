@@ -27,9 +27,9 @@ namespace foxglove_bridge {
 
 using ConnectionHandle = websocketpp::connection_hdl;
 using LogLevel = foxglove::WebSocketLogLevel;
-using Subscription = rclcpp::GenericSubscription::SharedPtr;
+using Subscription = foxglove_bridge::GenericSubscription::SharedPtr;
 using SubscriptionsByClient = std::map<ConnectionHandle, Subscription, std::owner_less<>>;
-using Publication = rclcpp::GenericPublisher::SharedPtr;
+using Publication = foxglove_bridge::GenericPublisher::SharedPtr;
 using ClientPublications = std::unordered_map<foxglove::ClientChannelId, Publication>;
 using PublicationsByClient = std::map<ConnectionHandle, ClientPublications, std::owner_less<>>;
 

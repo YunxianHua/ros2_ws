@@ -1,6 +1,7 @@
 #include <future>
 #include <iostream>
 
+#include <memory>
 #include <rclcpp/client.hpp>
 #include <rclcpp/serialized_message.hpp>
 #include <foxglove_bridge/typesupport_helpers.hpp>
@@ -9,31 +10,31 @@
 
 #include <foxglove_bridge/generic_client.hpp>
 
-namespace {
-
-// Copy of github.com/ros2/rclcpp/blob/33dae5d67/rclcpp/src/rclcpp/typesupport_helpers.cpp#L69-L92
-static std::tuple<std::string, std::string, std::string> extract_type_identifier(
-  const std::string& full_type) {
-  char type_separator = '/';
-  auto sep_position_back = full_type.find_last_of(type_separator);
-  auto sep_position_front = full_type.find_first_of(type_separator);
-  if (sep_position_back == std::string::npos || sep_position_back == 0 ||
-      sep_position_back == full_type.length() - 1) {
-    throw std::runtime_error(
-      "Message type is not of the form package/type and cannot be processed");
-  }
-
-  std::string package_name = full_type.substr(0, sep_position_front);
-  std::string middle_module = "";
-  if (sep_position_back - sep_position_front > 0) {
-    middle_module =
-      full_type.substr(sep_position_front + 1, sep_position_back - sep_position_front - 1);
-  }
-  std::string type_name = full_type.substr(sep_position_back + 1);
-
-  return std::make_tuple(package_name, middle_module, type_name);
-}
-}  // namespace
+//namespace {
+//
+//// Copy of github.com/ros2/rclcpp/blob/33dae5d67/rclcpp/src/rclcpp/typesupport_helpers.cpp#L69-L92
+//std::tuple<std::string, std::string, std::string> extract_type_identifier(
+//  const std::string& full_type) {
+//  char type_separator = '/';
+//  auto sep_position_back = full_type.find_last_of(type_separator);
+//  auto sep_position_front = full_type.find_first_of(type_separator);
+//  if (sep_position_back == std::string::npos || sep_position_back == 0 ||
+//      sep_position_back == full_type.length() - 1) {
+//    throw std::runtime_error(
+//      "Message type is not of the form package/type and cannot be processed");
+//  }
+//
+//  std::string package_name = full_type.substr(0, sep_position_front);
+//  std::string middle_module = "";
+//  if (sep_position_back - sep_position_front > 0) {
+//    middle_module =
+//      full_type.substr(sep_position_front + 1, sep_position_back - sep_position_front - 1);
+//  }
+//  std::string type_name = full_type.substr(sep_position_back + 1);
+//
+//  return std::make_tuple(package_name, middle_module, type_name);
+//}
+//}  // namespace
 
 namespace foxglove_bridge {
 
@@ -100,9 +101,9 @@ GenericClient::GenericClient(rclcpp::node_interfaces::NodeBaseInterface* nodeBas
   const auto requestTypeName = serviceType + "_Request";
   const auto responseTypeName = serviceType + "_Response";
 
-  _typeSupportLib = rclcpp::get_typesupport_library(serviceType, TYPESUPPORT_LIB_NAME);
+  _typeSupportLib = foxglove_bridge::get_typesupport_library(serviceType, TYPESUPPORT_LIB_NAME);
   _typeIntrospectionLib =
-    rclcpp::get_typesupport_library(serviceType, TYPESUPPORT_INTROSPECTION_LIB_NAME);
+          foxglove_bridge::get_typesupport_library(serviceType, TYPESUPPORT_INTROSPECTION_LIB_NAME);
   if (!_typeSupportLib || !_typeIntrospectionLib) {
     throw std::runtime_error("Failed to load shared library for service type " + serviceType);
   }
@@ -124,9 +125,9 @@ GenericClient::GenericClient(rclcpp::node_interfaces::NodeBaseInterface* nodeBas
     _typeIntrospectionLib->get_symbol(typeinstrospection_symbol_name)))();
 
   _requestTypeSupportHdl =
-    rclcpp::get_typesupport_handle(requestTypeName, TYPESUPPORT_LIB_NAME, _typeSupportLib);
+          foxglove_bridge::get_typesupport_handle(requestTypeName, TYPESUPPORT_LIB_NAME, _typeSupportLib);
   _responseTypeSupportHdl =
-    rclcpp::get_typesupport_handle(responseTypeName, TYPESUPPORT_LIB_NAME, _typeSupportLib);
+          foxglove_bridge::get_typesupport_handle(responseTypeName, TYPESUPPORT_LIB_NAME, _typeSupportLib);
 
   rcl_ret_t ret = rcl_client_init(this->get_client_handle().get(), this->get_rcl_node_handle(),
                                   _serviceTypeSupportHdl, serviceName.c_str(), &client_options);
@@ -148,7 +149,7 @@ std::shared_ptr<void> GenericClient::create_response() {
 }
 
 std::shared_ptr<rmw_request_id_t> GenericClient::create_request_header() {
-  return std::shared_ptr<rmw_request_id_t>(new rmw_request_id_t);
+  return std::make_shared<rmw_request_id_t>();
 }
 
 void GenericClient::handle_response(std::shared_ptr<rmw_request_id_t> request_header,

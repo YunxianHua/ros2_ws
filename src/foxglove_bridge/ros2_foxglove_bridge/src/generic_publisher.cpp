@@ -27,9 +27,8 @@ namespace
     }
 }  // unnamed namespace
 
-namespace rclcpp
+namespace foxglove_bridge
 {
-
     GenericPublisher::GenericPublisher(
             rclcpp::node_interfaces::NodeBaseInterface * node_base,
             const rosidl_message_type_support_t & type_support,
@@ -48,4 +47,4 @@ namespace rclcpp
         }
     }
 
-}  // namespace rclcpp
+}  // namespace foxglove_bridge

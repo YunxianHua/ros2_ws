@@ -533,7 +533,7 @@ void FoxgloveBridge::subscribe(foxglove::ChannelId channelId, ConnectionHandle c
   }
 
   try {
-    auto subscriber = rclcpp::create_generic_subscription(
+    auto subscriber = foxglove_bridge::create_generic_subscription(
       this->get_node_topics_interface(),
       topic, datatype, qos,
       std::bind(&FoxgloveBridge::rosMessageHandler, this, channelId, clientHandle, _1));//,
@@ -625,7 +625,7 @@ void FoxgloveBridge::clientAdvertise(const foxglove::ClientAdvertisement& advert
     }
     rclcpp::PublisherOptions publisherOptions{};
     publisherOptions.callback_group = _clientPublishCallbackGroup;
-    auto publisher = rclcpp::create_generic_publisher(
+    auto publisher = foxglove_bridge::create_generic_publisher(
             this->get_node_topics_interface(), topicName, topicType, qos);//, publisherOptions);
 
     RCLCPP_INFO(this->get_logger(), "Client %s is advertising \"%s\" (%s) on channel %d",
@@ -679,7 +679,7 @@ void FoxgloveBridge::clientUnadvertise(foxglove::ChannelId channelId, Connection
 
 void FoxgloveBridge::clientMessage(const foxglove::ClientMessage& message, ConnectionHandle hdl) {
   // Get the publisher
-  rclcpp::GenericPublisher::SharedPtr publisher;
+  foxglove_bridge::GenericPublisher::SharedPtr publisher;
   {
     const auto channelId = message.advertisement.channelId;
     std::lock_guard<std::mutex> lock(_clientAdvertisementsMutex);

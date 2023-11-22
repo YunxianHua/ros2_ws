@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef RCLCPP__GENERIC_SUBSCRIPTION_HPP_
-#define RCLCPP__GENERIC_SUBSCRIPTION_HPP_
+#ifndef ROS2_WS_GENERIC_SUBSCRIPTION_HPP_
+#define ROS2_WS_GENERIC_SUBSCRIPTION_HPP_
 
 #include <memory>
 #include <string>
@@ -24,7 +24,7 @@
 #include "rclcpp/serialization.hpp"
 #include "rclcpp/subscription.hpp"
 
-namespace rclcpp
+namespace foxglove_bridge
 {
 
 /**
@@ -82,5 +82,6 @@ namespace rclcpp
         const rclcpp::QoS qos_;
     };
 
-}
-#endif  // RCLCPP__GENERIC_SUBSCRIPTION_HPP_
+}  // namespace foxglove_bridge
+
+#endif  // ROS2_WS_GENERIC_SUBSCRIPTION_HPP_

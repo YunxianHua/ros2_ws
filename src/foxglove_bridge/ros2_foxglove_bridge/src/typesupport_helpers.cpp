@@ -31,7 +31,7 @@
 
 #include "rosidl_runtime_cpp/message_type_support_decl.hpp"
 
-namespace rclcpp
+namespace foxglove_bridge
 {
 
     std::string get_typesupport_library_path(
@@ -66,7 +66,7 @@ namespace rclcpp
         return library_path;
     }
 
-    const std::pair<std::string, std::string> extract_type_and_package(const std::string & full_type)
+    std::pair<std::string, std::string> extract_type_and_package(const std::string & full_type)
     {
         std::string package_name;
         std::string type_name;
@@ -76,7 +76,7 @@ namespace rclcpp
         return {package_name, type_name};
     }
 
-    const std::tuple<std::string, std::string, std::string>
+    std::tuple<std::string, std::string, std::string>
     extract_type_identifier(const std::string & full_type)
     {
         char type_separator = '/';
@@ -91,7 +91,7 @@ namespace rclcpp
         }
 
         std::string package_name = full_type.substr(0, sep_position_front);
-        std::string middle_module = "";
+        std::string middle_module;
         if (sep_position_back - sep_position_front > 0) {
             middle_module =
                     full_type.substr(sep_position_front + 1, sep_position_back - sep_position_front - 1);
@@ -156,4 +156,4 @@ namespace rclcpp
         }
     }
 
-}  // namespace rclcpp
+}  // namespace foxglove_bridge

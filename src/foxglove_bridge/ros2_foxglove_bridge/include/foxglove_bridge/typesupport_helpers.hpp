@@ -13,7 +13,7 @@
 
 #include "rclcpp/visibility_control.hpp"
 
-namespace rclcpp
+namespace foxglove_bridge
 {
     RCLCPP_PUBLIC
             std::shared_ptr<rcpputils::SharedLibrary>
@@ -27,9 +27,9 @@ namespace rclcpp
             std::shared_ptr<rcpputils::SharedLibrary> library);
 
     RCLCPP_PUBLIC
-    const std::tuple<std::string, std::string, std::string>
+    std::tuple<std::string, std::string, std::string>
     extract_type_identifier(const std::string & full_type);
-}  // namespace rclcpp
+}  // namespace foxglove_bridge
 
 
 #endif //ROS2_WS_TYPESUPPORT_HELPERS_HPP

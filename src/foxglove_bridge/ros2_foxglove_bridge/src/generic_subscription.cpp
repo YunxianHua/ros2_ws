@@ -16,6 +16,7 @@
 
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "rclcpp/any_subscription_callback.hpp"
 #include "rclcpp/subscription.hpp"
@@ -31,9 +32,8 @@ namespace
     }
 }  // unnamed namespace
 
-namespace rclcpp
+namespace foxglove_bridge
 {
-
     GenericSubscription::GenericSubscription(
             rclcpp::node_interfaces::NodeBaseInterface * node_base,
             const rosidl_message_type_support_t & ts,
@@ -47,7 +47,7 @@ namespace rclcpp
             get_subscription_options(qos),
             true),
               default_allocator_(rcutils_get_default_allocator()),
-              callback_(callback),
+              callback_(std::move(callback)),
               qos_(qos)
     {}
 
@@ -99,4 +99,4 @@ namespace rclcpp
         return std::make_shared<rclcpp::SerializedMessage>(capacity);
     }
 
-}  // namespace rclcpp
+}  // namespace foxglove_bridge
