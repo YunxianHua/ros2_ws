@@ -133,15 +133,12 @@ namespace foxglove_bridge {
 
     ParameterList ParameterInterface::getParams(const std::vector<std::string> &paramNames,
                                                 const std::chrono::duration<double> &timeout) {
-        RCLCPP_INFO(_node->get_logger(), "getParams function was called");
         std::lock_guard<std::mutex> lock(_mutex);
 
         std::unordered_map<std::string, std::vector<std::string>> paramNamesByNodeName;
         const auto thisNode = _node->get_fully_qualified_name();
 
-        RCLCPP_INFO(_node->get_logger(), "paramNames size: %d", paramNames.size());
         if (!paramNames.empty()) {
-            RCLCPP_INFO(_node->get_logger(), "paramNames was empty");
             // Break apart fully qualified {node_name}.{param_name} strings and build a
             // mape of node names to the list of parameters for each node
             for (const auto &fullParamName: paramNames) {
@@ -149,13 +146,13 @@ namespace foxglove_bridge {
                 paramNamesByNodeName[nodeName].push_back(paramName);
             }
 
-            RCLCPP_DEBUG(_node->get_logger(), "Getting %zu parameters from %zu nodes...", paramNames.size(),
+            RCLCPP_INFO(_node->get_logger(), "Getting %zu parameters from %zu nodes...", paramNames.size(),
                          paramNamesByNodeName.size());
         } else {
             // Make a map of node names to empty parameter lists
             // Only consider nodes that offer services to list & get parameters.
             for (const auto &fqnNodeName: _node->get_node_names()) {
-                if (fqnNodeName == thisNode) {
+                if (fqnNodeName == thisNode || fqnNodeName == "/foxglove_bridge_component_manager") {
                     continue;
                 }
                 const auto [nodeNs, nodeName] = getNodeAndNodeNamespace(fqnNodeName);
@@ -208,7 +205,6 @@ namespace foxglove_bridge {
         }
 
         ParameterList result;
-        RCLCPP_INFO(_node->get_logger(), "Parameters Future count: %d", getParametersFuture.size());
         for (auto &future: getParametersFuture) {
             try {
                 const auto params = future.get();
