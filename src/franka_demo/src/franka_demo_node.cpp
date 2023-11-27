@@ -53,7 +53,7 @@ void moveJointThread(const rclcpp::Logger &logger, std::array<double, 7> stiffne
         for (int j = 0; j < 7; ++j) {
             joint_states.name.push_back("panda_joint" + std::to_string(j + 1));
             auto current_state =
-                    current_joint_state[j] - move_step[j] / move_step_count * double(move_step_count - 1 - i);
+                    current_joint_state[j] - move_step[j] / move_step_count * (move_step_count - 1 - i);
             joint_states.position.push_back(current_state);
         }
         publisher->publish(joint_states);
