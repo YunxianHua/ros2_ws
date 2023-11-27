@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="franka_demo" exec="franka_demo" name="franka_demo"/>
+</launch>
