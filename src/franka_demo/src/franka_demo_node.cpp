@@ -37,9 +37,10 @@ void publishJointStateThread(const std::shared_ptr<rclcpp::Node> &node) {
     qos_profile.reliability(RMW_QOS_POLICY_RELIABILITY_RELIABLE);
     auto joint_states_publisher = node->create_publisher<sensor_msgs::msg::JointState>("/joint_states", qos_profile);
     sensor_msgs::msg::JointState joint_states;
+    joint_states.name.resize(7);
+    joint_states.position.resize(7);
     for (int i = 0; i < 7; ++i) {
-        joint_states.name.push_back("panda_joint" + std::to_string(i + 1));
-        joint_states.position.push_back(0);
+        joint_states.name[i] = "panda_joint" + std::to_string(i + 1);
     }
 
     while (rclcpp::ok()){
@@ -54,11 +55,9 @@ void publishJointStateThread(const std::shared_ptr<rclcpp::Node> &node) {
 
             for (int i = 0; i < move_step_count; ++i) {
                 joint_states.header.stamp = clock.now();
-
-                joint_states.position.clear();
                 for (int j = 0; j < 7; ++j) {
                     auto current_state = current_joint_state[j] + move_step[j];
-                    joint_states.position.push_back(current_state);
+                    joint_states.position[j] = current_state;
                     current_joint_state[j] = current_state;
                 }
                 joint_states_publisher->publish(joint_states);
@@ -106,6 +105,7 @@ int main(int argc, char **argv) {
 
     std::thread joint_state_publisher(publishJointStateThread, node);
     joint_state_publisher.detach();
+    RCLCPP_INFO(node->get_logger(), "create a joint state publish thread.");
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;
