@@ -13,6 +13,7 @@ project(foxglove_bridge LANGUAGES CXX VERSION 0.7.3)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_TYPE Release)
 
 macro(enable_strict_compiler_warnings target)
     if (MSVC)
@@ -29,10 +30,6 @@ find_package(OpenSSL REQUIRED)
 find_package(Threads REQUIRED)
 find_package(websocketpp REQUIRED)
 find_package(ZLIB REQUIRED)
-
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE RelWithDebInfo)
-endif ()
 
 # Determine wheter to use standalone or boost asio
 option(USE_ASIO_STANDALONE "Build with standalone ASIO" ON)
