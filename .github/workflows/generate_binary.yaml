@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/YunxianHua/ros2_ws/ros2-aarch-runner:latest
+      image: ghcr.io/YunxianHua/ros2_ws/ros2-x86-runner:latest
     permissions:
       packages: write
       contents: read
@@ -22,9 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: generate
-        run: |
-          
-          ./gradlew publish
+        run: colcon build
+      - name: zip-artifact
+        run: zip -r install.zip install
       - name: Cache jvmJar
         uses: actions/upload-artifact@v3
         with:
