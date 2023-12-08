@@ -1,0 +1,11 @@
+#mppi critic display
+
+float64 constraintcritic
+float64 obstaclescritic
+float64 goalcritic
+float64 goalanglecritic
+float64 pathaligncritic
+float64 pathfollowcritic
+float64 pathanglecritic
+float64 preferforwardcritic
+float64 twirlingcritic
