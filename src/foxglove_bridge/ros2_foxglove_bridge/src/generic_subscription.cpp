@@ -45,7 +45,8 @@ namespace foxglove_bridge {
             true),
               default_allocator_(rcutils_get_default_allocator()),
               callback_(std::move(callback)),
-              qos_(qos) {}
+              qos_(qos),
+              last_timestamp_(0) {}
 
     std::shared_ptr<void> GenericSubscription::create_message() {
         return create_serialized_message();
@@ -57,7 +58,13 @@ namespace foxglove_bridge {
 
     void GenericSubscription::handle_message(
             std::shared_ptr<void> &message, const rclcpp::MessageInfo &message_info) {
-        (void) message_info;
+
+//        (void) message_info;
+        int64_t cur_stamp = message_info.get_rmw_message_info().source_timestamp;
+        if (cur_stamp - last_timestamp_ < 100000000) {
+            return;
+        }
+        last_timestamp_ = cur_stamp;
         auto typed_message = std::static_pointer_cast<rclcpp::SerializedMessage>(message);
         callback_(typed_message);
     }

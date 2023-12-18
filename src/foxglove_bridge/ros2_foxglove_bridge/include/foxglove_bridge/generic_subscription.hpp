@@ -79,6 +79,8 @@ namespace foxglove_bridge {
         rcutils_allocator_t default_allocator_;
         std::function<void(std::shared_ptr<rclcpp::SerializedMessage>)> callback_;
         const rclcpp::QoS qos_;
+        int64_t last_timestamp_;
+
     };
 
 }  // namespace foxglove_bridge

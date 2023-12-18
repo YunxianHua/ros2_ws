@@ -13,7 +13,7 @@ project(foxglove_bridge LANGUAGES CXX VERSION 0.7.3)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
 
 macro(enable_strict_compiler_warnings target)
     if (MSVC)
@@ -40,6 +40,8 @@ else ()
     message(STATUS "Using Boost ASIO")
     find_package(Boost REQUIRED)
 endif (USE_ASIO_STANDALONE)
+
+add_compile_options(-pg)
 
 # Detect big-endian architectures
 include(TestBigEndian)
