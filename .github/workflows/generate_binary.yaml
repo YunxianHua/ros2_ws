@@ -29,11 +29,11 @@ jobs:
           /usr/bin/git config --global --add safe.directory /__w/ros2_ws/ros2_ws
           /ros_entrypoint.sh colcon build
 
-#      - name: zip-artifact
-#        run: zip -r install.zip install
+      - name: zip-artifact
+        run: zip -r install.zip install
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: install
-          path: install
+          name: ros2_ws
+          path: install.zip

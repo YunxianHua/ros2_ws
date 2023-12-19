@@ -4,5 +4,6 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4B63CF8FDE
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends nlohmann-json3-dev  \
     libasio-dev libboost-all-dev  \
-    libssl-dev libwebsocketpp-dev
+    libssl-dev libwebsocketpp-dev \
+    zip unzip ros-foxy-resource-retriever
 RUN rm -rf /var/lib/apt/lists/*
