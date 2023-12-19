@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ros:foxy
+FROM ros:foxy
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 4B63CF8FDE49746E98FA01DDAD19BAB3CBF125EA
 # Install system dependencies

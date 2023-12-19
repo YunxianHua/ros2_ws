@@ -1,4 +1,4 @@
-name: Build x86 runner
+name: Build runner
 on:
   workflow_dispatch:
 
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGISTRY: ghcr.io
-      IMAGE_NAME: ${{ github.repository }}/ros2-x86-runner
+      IMAGE_NAME: ${{ github.repository }}/ros2-foxy-runner
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -35,6 +35,9 @@ jobs:
         uses: docker/build-push-action@v3.3.0
         with:
           file: foxy.amd64.Dockerfile
+          platforms: |
+            linux/amd64
+            linux/arm64
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
