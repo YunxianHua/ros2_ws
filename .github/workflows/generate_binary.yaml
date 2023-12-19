@@ -10,12 +10,21 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/yunxianhua/ros2_ws/ros2-x86-runner:latest
+    strategy:
+      matrix:
+        arch: [ x86_64, arm64 ]
+        include:
+          - arch: x86_64
+            os: linux
+            label: ubuntu-latest
+          - arch: arm64
+            os: linux
+            label: [ aliyun, arm ]
+    runs-on: ${{ matrix.label }}
+    container: ghcr.io/yunxianhua/ros2_ws/ros2-foxy-runner:latest
     permissions:
-      packages: write
-      contents: read
+      contents: write
+
     env:
       BUF_TOKEN: ${{ secrets.BUF_TOKEN }}
       GH_PACKAGES_ORG_TOKEN: ${{ secrets.GH_PACKAGES_ORG_TOKEN }}
